@@ -1,0 +1,43 @@
+@namespace NTech.Blazor
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRunTime
+
+<div class="collapse navbar-collapse" id="@Id">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public string Id { get; set; } = $"navbar_{Guid.NewGuid().ToString()}";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        await Close();
+    }
+
+    private void HandleLocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+        NavigationManager.LocationChanged += HandleLocationChanged!;
+
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= HandleLocationChanged!;
+    }
+
+    public async Task Open()
+    {
+        await JSRunTime.InvokeVoidAsync("window.navbar.openCollapse", Id);
+    }
+
+    public async Task Close()
+    {
+        await JSRunTime.InvokeVoidAsync("window.navbar.closeCollapse", Id);
+    }
+}

@@ -1,0 +1,65 @@
+@namespace NTech.Blazor
+
+<nav class="navbar sticky-top @($"navbar-expand-{_breakpoint}") bg-body-tertiary border-bottom shadow" style="@_color">
+    <div class="container-xxl">
+        <a class="navbar-brand p-0" href="">
+            <img src="images/logo.png" height="40" alt="Logo">
+        </a>
+        <div>
+            @if (StartTemplate != null || EndTemplate != null)
+            {
+                <button class="navbar-toggler" type="button" @onclick="OpenCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            }
+        </div>
+        <NavbarCollapse @ref="collapse">
+            <div class="navbar-nav me-auto">
+                @if (StartTemplate != null)
+                {
+                    <div class="nav-item py-2 @($"py-{_breakpoint}-1") col-12 @($"col-{_breakpoint}-auto")">
+                        <hr class="@($"d-{_breakpoint}-none") my-0">
+                    </div>
+                    @StartTemplate
+                }
+            </div>
+            <div class="navbar-nav">
+                @if (EndTemplate != null)
+                {
+                    <hr class="nav-item @($"d-{_breakpoint}-none") my-2">
+                    @EndTemplate
+                }
+            </div>
+        </NavbarCollapse>
+    </div>
+</nav>
+
+@code {
+    private NavbarCollapse collapse = default!;
+    
+    [Parameter] public RenderFragment? StartTemplate { get; set; }
+    [Parameter] public RenderFragment? EndTemplate { get; set; }
+    [Parameter] public string? Color { get; set; }
+    [Parameter] public Breakpoints Breakpoint { get; set; } = Breakpoints.SM;
+
+    private string _breakpoint => Breakpoint switch
+    {
+        Breakpoints.SM => "sm",
+        Breakpoints.MD => "md",
+        Breakpoints.LG => "lg",
+        Breakpoints.XL => "xl",
+        Breakpoints.XXL => "xxl",
+        _ => "sm"
+	};
+
+    private string _color
+    {
+        get => string.IsNullOrWhiteSpace(Color) ? "" : $"--nt-dropdown-link-color: {Color};";
+    }
+
+    private async Task OpenCollapse()
+    {
+        Console.WriteLine(collapse);
+        await collapse.Open();
+    }
+}

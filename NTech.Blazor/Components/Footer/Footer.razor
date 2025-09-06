@@ -1,0 +1,27 @@
+@namespace NTech.Blazor
+
+<footer class="footer bg-body-tertiary border-top">
+    <div class="container-md">
+        <div class="row justify-content-between g-3">
+            <div class="col-auto">
+                @if (StartTemplate != null)
+                {
+                    @StartTemplate
+                }
+            </div>
+            <div class="col-auto justify-content-end d-flex">
+                <div class="ms-3">
+                    @if (EndTemplate != null)
+                    {
+                        @EndTemplate
+					}
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+@code {
+    [Parameter] public RenderFragment? StartTemplate { get; set; }
+    [Parameter] public RenderFragment? EndTemplate { get; set; }
+}
