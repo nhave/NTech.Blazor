@@ -1,2 +1,0 @@
-wwwroot\ntech.blazor.css
-wwwroot\ntech.blazor.js
