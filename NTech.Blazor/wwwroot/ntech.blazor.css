@@ -84,10 +84,6 @@ body {
     letter-spacing: 1px;
 }
 
-.navbar-brand img {
-    -webkit-user-drag: none;
-}
-
 .navbar .btn-group {
     display: block;
 }
@@ -222,6 +218,10 @@ body {
     -webkit-user-select: none; /* Safari/Chrome */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Ældre IE/Edge */
+}
+
+.no-drag img {
+    -webkit-user-drag: none;
 }
 
 .row-cols-7 > * {
