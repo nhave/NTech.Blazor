@@ -363,3 +363,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/NTech.DemoApp/obj/Debug/net8.0/NTech.DemoApp.AssemblyInfoInputs.cache
