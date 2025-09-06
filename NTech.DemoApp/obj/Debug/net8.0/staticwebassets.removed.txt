@@ -1,4 +1,0 @@
-C:\Users\nhave\Code\c#\NTech.Blazor\NTech.DemoApp\wwwroot\app.css
-C:\Users\nhave\Code\c#\NTech.Blazor\NTech.DemoApp\wwwroot\bootstrap\bootstrap.min.css
-C:\Users\nhave\Code\c#\NTech.Blazor\NTech.DemoApp\wwwroot\bootstrap\bootstrap.min.css.map
-C:\Users\nhave\Code\c#\NTech.Blazor\NTech.DemoApp\wwwroot\favicon.png
