@@ -10,6 +10,9 @@
     <Content Include="Enums\Breakpoint.cs" />
   </ItemGroup>
 
+    <ItemGroup>
+	    <Content Update="wwwroot\**\*" Pack="true" PackagePath="wwwroot" />
+    </ItemGroup>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -19,5 +22,31 @@
     <PackageReference Include="Blazor.Bootstrap" Version="3.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.19" />
   </ItemGroup>
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<PackageId>NTech.Blazor</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>NHAVE</Authors>
+		<Company>N-Tech</Company>
+		<Description>Personal extension for Blazor.Bootstrap</Description>
+		<PackageProjectUrl>https://github.com/nhave/NTech.Blazor</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/nhave/NTech.Blazor</RepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<Copyright>Copyright © 2025 NHAVE</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
