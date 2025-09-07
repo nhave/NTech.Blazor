@@ -6,6 +6,12 @@
             <img src="images/logo.png" height="40" alt="Logo">
         </a>
         <div>
+            @if (CollapsedTemplate != null)
+            {
+                <div class="d-inline-block d-@($"{_breakpoint}-none") me-2">
+                    @CollapsedTemplate
+                </div>
+			}
             @if (StartTemplate != null || EndTemplate != null)
             {
                 <button class="navbar-toggler" type="button" @onclick="OpenCollapse">
@@ -39,6 +45,7 @@
     
     [Parameter] public RenderFragment? StartTemplate { get; set; }
     [Parameter] public RenderFragment? EndTemplate { get; set; }
+    [Parameter] public RenderFragment? CollapsedTemplate { get; set; }
     [Parameter] public string? Color { get; set; }
     [Parameter] public Breakpoints Breakpoint { get; set; } = Breakpoints.SM;
 

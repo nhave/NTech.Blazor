@@ -6,10 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="Enums\Breakpoint.cs" />
-  </ItemGroup>
-
     <ItemGroup>
 	    <Content Update="wwwroot\**\*" Pack="true" PackagePath="wwwroot" />
     </ItemGroup>
@@ -26,7 +22,7 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<PackageId>NTech.Blazor</PackageId>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>NHAVE</Authors>
 		<Company>N-Tech</Company>
 		<Description>Personal extension for Blazor.Bootstrap</Description>
