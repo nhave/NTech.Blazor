@@ -1,0 +1,57 @@
+﻿@namespace NTech.Blazor
+
+<li>
+    @if (Href is null)
+    {
+        <button class="@_class" @onclick="HandleClick">
+            @ChildContent
+        </button>
+    }
+    else
+    {
+        if (Dowload)
+        {
+            <a class="@_class" href="@Href" target="_hrefTarget" download @onclick="HandleClick">
+                @ChildContent
+            </a>
+        }
+        else
+        {
+            <a class="@_class" target="_hrefTarget" href="@Href" @onclick="HandleClick">
+                @ChildContent
+            </a>
+        }
+    }
+</li>
+
+@code {
+    [CascadingParameter] private ContextMenu Owner { get; set; } = default!;
+
+    [Parameter] public EventCallback<object> OnClick { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Href { get; set; }
+    [Parameter] public bool Dowload { get; set; } = false;
+    [Parameter] public bool NewTab { get; set; } = false;
+
+    private string _class
+    {
+        get
+        {
+            return "dropdown-item" + (!string.IsNullOrEmpty(Class) ? $" {Class}" : "");
+        }
+    }
+
+    private string _hrefTarget { get
+        {
+            return NewTab ? "_blank" : "_self";
+        }
+    }
+
+    private async Task HandleClick()
+    {
+        if (OnClick.HasDelegate)
+            await OnClick.InvokeAsync(Owner.Item);
+        await Owner.HideAsync();
+    }
+}

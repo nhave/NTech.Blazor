@@ -1,0 +1,77 @@
+﻿@namespace NTech.Blazor
+
+@if (_visible)
+{
+    <div class="context-backdrop" @onclick="HideAsync"
+         @oncontextmenu="HideAsync"
+         @oncontextmenu:preventDefault
+         @oncontextmenu:stopPropagation></div>
+    <div class="@_class" id="@_menuId" style="top:@_yPx; left:@_xPx;">
+        <CascadingValue Value="this">
+            @if (ChildContent != null)
+            {
+                <ul class="list-unstyled mb-0">
+                    @ChildContent(Item!)
+                </ul>
+            }
+        </CascadingValue>
+    </div>
+}
+
+@code {
+    [Parameter] public RenderFragment<object>? ChildContent { get; set; }
+    [Parameter] public string Class { get; set; } = string.Empty;
+
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+
+    private IJSObjectReference? _module;
+    private string _class => "context-menu shadow" + (!string.IsNullOrEmpty(Class) ? $" {Class}" : "");
+    private bool _visible;
+    private string _xPx = "-9999px", _yPx = "-9999px";
+    private string _menuId = $"contextMenu_{Guid.NewGuid()}";
+
+    internal object? Item;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        _module = await JS.InvokeAsync<IJSObjectReference>(
+            "import", "./_content/NTech.Blazor/contextmenuhelper.js");
+    }
+
+    public async Task ShowAsync(object item, double x, double y)
+    {
+        Item = item;
+        _visible = true;
+
+        await InvokeAsync(StateHasChanged);
+
+        // Vent til menuen er renderet i DOM
+        await Task.Yield();
+
+        // Justér position baseret på faktisk størrelse
+        var adjusted = await _module!.InvokeAsync<Position>(
+            "adjustPosition", $"#{_menuId}", x, y);
+
+        _xPx = $"{adjusted.x}px";
+        _yPx = $"{adjusted.y}px";
+
+        await _module!.InvokeVoidAsync("lockScroll");
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async Task HideAsync()
+    {
+        Item = default;
+        _visible = false;
+
+        _xPx = "-9999px";
+        _yPx = "-9999px";
+
+        await _module!.InvokeVoidAsync("unlockScroll");
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private record Position(double x, double y);
+}

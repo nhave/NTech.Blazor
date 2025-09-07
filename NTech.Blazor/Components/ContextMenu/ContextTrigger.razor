@@ -1,0 +1,21 @@
+﻿@namespace NTech.Blazor
+
+<div class="@Class" @oncontextmenu="(e => OnContextMenu(Item, e))"
+     @oncontextmenu:preventDefault
+     @oncontextmenu:stopPropagation
+     @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? AdditionalAttributes { get; set; }
+    [Parameter] public object Item { get; set; } = default!;
+    [Parameter] public ContextMenu ContextMenu { get; set; } = default!;
+    [Parameter] public string Class { get; set; } = string.Empty;
+
+    private async Task OnContextMenu(object item, MouseEventArgs e)
+    {
+        await ContextMenu.ShowAsync(item, e.ClientX, e.ClientY);
+    }
+}

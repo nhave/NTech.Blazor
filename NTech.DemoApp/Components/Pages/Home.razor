@@ -8,5 +8,33 @@
     </CardHeader>
     <CardBody>
         <p>Welcome to your new app.</p>
+        <ContextTrigger ContextMenu="_contextMenu" Item="item">
+            <div class="border p-5" style="user-select: none;">
+                Right click here to open the context menu.
+            </div>
+        </ContextTrigger>
     </CardBody>
 </Card>
+
+<ContextMenu @ref="_contextMenu">
+    <ContextItem OnClick="OnContextClicked">
+        <i class="bi bi-folder2-open me-2"></i>Test
+    </ContextItem>
+</ContextMenu>
+
+@code {
+    private ContextMenu _contextMenu { get; set; } = default!;
+
+    private class Item
+    {
+		public string Name { get; set; } = string.Empty;
+    }
+
+	private Item item = new Item { Name = "TestItem" };
+
+    private void OnContextClicked(object item)
+    {
+        var myItem = item as Item;
+        Console.WriteLine($"Context triggered for: {myItem?.Name ?? "NULL"}");
+	}
+}
