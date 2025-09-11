@@ -1,0 +1,58 @@
+@namespace NTech.Blazor
+
+@implements IDisposable
+@inject NavigationManager NavigationManager
+
+@if (Parent?.ActiveTab == this)
+{
+    @ChildContent
+}
+
+@code {
+    [CascadingParameter] public NavtabMenu? Parent { get; set; }
+    [Parameter] public string Name { get; set; } = string.Empty;
+    [Parameter] public string To { get; set; } = string.Empty;
+    [Parameter] public bool Active { get; set; } = false;
+    [Parameter] public string Class { get; set; } = string.Empty;
+    [Parameter] public NavLinkMatch Match { get; set; } = NavLinkMatch.All;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private bool IsActive => ShouldMatch();
+
+    protected override void OnInitialized()
+    {
+        Parent?.AddTab(this, IsActive);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    private bool ShouldMatch()
+    {
+        var currentUri = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        if (!string.IsNullOrWhiteSpace(To))
+        {
+            if (Match == NavLinkMatch.All)
+            {
+                return string.Equals(currentUri.TrimEnd('/'), To.TrimEnd('/'), StringComparison.OrdinalIgnoreCase);
+            }
+            else
+            {
+                return currentUri.StartsWith(To, StringComparison.OrdinalIgnoreCase);
+            }
+        }
+        else
+        {
+            return Active;
+        }
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}

@@ -1,0 +1,54 @@
+@namespace NTech.Blazor
+
+<CascadingValue Value="this">
+    <div class="scroll-x-top overflow-x-auto">
+        <div class="@ClassBuilder.Build("navtab-container", Class)" style="@Style">
+            <ul class="nav nav-tabs nav-tabs-overflow px-2">
+                @foreach (var tab in Tabs)
+                {
+                    <li class="nav-item">
+                        @if (!string.IsNullOrEmpty(tab.To))
+                        {
+                            <a class="@ClassBuilder.Build("nav-link", tab == ActiveTab ? "active" : "")" href="@tab.To" @onclick="() => SelectTab(tab)">
+                                @tab.Name
+                            </a>
+                        }
+                        else
+                        {
+                            <button class="@ClassBuilder.Build("nav-link", tab == ActiveTab ? "active" : "")" @onclick="() => SelectTab(tab)">
+                                @tab.Name
+                            </button>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="@ClassBuilder.Build(ContentClass, ActiveTab?.Class!)">
+        @ChildContent
+    </div>
+</CascadingValue>
+
+@code {
+    internal List<Navtab> Tabs { get; set; } = new();
+    internal Navtab? ActiveTab { get; set; }
+
+    [Parameter] public string Class { get; set; } = string.Empty;
+    [Parameter] public string Style { get; set; } = string.Empty;
+    [Parameter] public string ContentClass { get; set; } = string.Empty;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    internal void AddTab(Navtab tab, bool active)
+    {
+        Tabs.Add(tab);
+        if (ActiveTab == null || active)
+            ActiveTab = tab;
+        StateHasChanged();
+    }
+
+    private void SelectTab(Navtab tab)
+    {
+        ActiveTab = tab;
+    }
+}

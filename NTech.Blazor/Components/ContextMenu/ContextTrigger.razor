@@ -16,6 +16,10 @@
 
     private async Task OnContextMenu(object item, MouseEventArgs e)
     {
-        await ContextMenu.ShowAsync(item, e.ClientX, e.ClientY);
+        try
+        {
+            await ContextMenu.ShowAsync(item, e.ClientX, e.ClientY);
+        }
+        catch {}
     }
 }

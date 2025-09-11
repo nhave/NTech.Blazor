@@ -333,3 +333,56 @@ body {
     --bs-dropdown-padding-x: 0.25rem;
     --bs-dropdown-padding-y: 0.25rem;
 }
+
+.navtab-container {
+    min-width: fit-content;
+}
+
+.nav-tabs-overflow {
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: fit-content;
+}
+
+.nav-tabs-overflow .nav-link {
+    text-wrap: nowrap;
+}
+
+.scroll-x-top {
+    transform: scaleY(-1);
+}
+
+.scroll-x-top > * {
+    transform: scaleY(-1);
+}
+
+.scroll-x-top {
+    --sb-track-color: #00000000;
+    --sb-thumb-color: rgba(var(--bs-emphasis-color-rgb), 0.65);
+    --sb-thumb-color-hover: rgba(var(--bs-emphasis-color-rgb), 1);
+    --sb-size: 5px;
+}
+
+.scroll-x-top::-webkit-scrollbar {
+    height: var(--sb-size);
+}
+
+.scroll-x-top::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 10px;
+}
+
+.scroll-x-top::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 10px;
+}
+
+.scroll-x-top::-webkit-scrollbar-thumb:hover {
+    background: var(--sb-thumb-color-hover);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    .scroll-x-top {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+}

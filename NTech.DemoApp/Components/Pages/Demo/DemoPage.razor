@@ -1,0 +1,24 @@
+﻿@page "/demo/{*subpage}"
+
+<PageTitle>Demo Page</PageTitle>
+
+<Card Class="shadow">
+    <CardHeader>
+        <h1>Demo Page</h1>
+    </CardHeader>
+    <CardBody>
+        <p>This page provides demos of many features, in this project.</p>
+    </CardBody>
+    <NavtabMenu Class="card-tabs border-top pt-3" ContentClass="card-body">
+        <Navtab Name="Demo" To="demo">
+            Demo
+        </Navtab>
+        <Navtab Name="Contex Menu" To="demo/contexmenu">
+            <ContextDemo />
+        </Navtab>
+    </NavtabMenu>
+</Card>
+
+@code {
+    [Parameter] public string? Subpage { get; set; }
+}
