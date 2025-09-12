@@ -9,16 +9,51 @@
     <CardBody>
         <p>This page provides demos of many features, in this project.</p>
     </CardBody>
-    <NavtabMenu Class="card-tabs border-top pt-3" ContentClass="card-body">
+    <NavtabMenu Class="card-tabs border-top" ContentClass="card-body" OnChanged="OnTabChanged">
         <Navtab Name="Demo" To="demo">
             Demo
         </Navtab>
         <Navtab Name="Contex Menu" To="demo/contexmenu">
             <ContextDemo />
         </Navtab>
+        <Navtab Name="Test Page" To="demo/test">
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+            <p>Test</p>
+        </Navtab>
     </NavtabMenu>
 </Card>
 
 @code {
     [Parameter] public string? Subpage { get; set; }
+
+    private void OnTabChanged(string tabName)
+    {
+		StateHasChanged();
+    }
 }

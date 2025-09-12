@@ -11,6 +11,7 @@
 @code {
     [CascadingParameter] public NavtabMenu? Parent { get; set; }
     [Parameter] public string Name { get; set; } = string.Empty;
+    [Parameter] public string Title { get; set; } = string.Empty;
     [Parameter] public string To { get; set; } = string.Empty;
     [Parameter] public bool Active { get; set; } = false;
     [Parameter] public string Class { get; set; } = string.Empty;
@@ -18,7 +19,8 @@
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    private bool IsActive => ShouldMatch();
+    public bool IsActive => ShouldMatch();
+	internal string DisplayName => string.IsNullOrWhiteSpace(Title) ? Name : Title;
 
     protected override void OnInitialized()
     {
@@ -29,6 +31,8 @@
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
         StateHasChanged();
+        if (IsActive)
+            Parent?.SelectTab(this).GetAwaiter();
     }
 
     private bool ShouldMatch()

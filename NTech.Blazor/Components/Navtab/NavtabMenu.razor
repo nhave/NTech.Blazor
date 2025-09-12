@@ -1,22 +1,22 @@
 @namespace NTech.Blazor
 
 <CascadingValue Value="this">
-    <div class="scroll-x-top overflow-x-auto">
-        <div class="@ClassBuilder.Build("navtab-container", Class)" style="@Style">
-            <ul class="nav nav-tabs nav-tabs-overflow px-2">
+    <div class="@Class" style="@Style">
+        <div class="navtab-wrapper">
+            <ul class="nav nav-tabs px-2">
                 @foreach (var tab in Tabs)
                 {
                     <li class="nav-item">
                         @if (!string.IsNullOrEmpty(tab.To))
                         {
                             <a class="@ClassBuilder.Build("nav-link", tab == ActiveTab ? "active" : "")" href="@tab.To" @onclick="() => SelectTab(tab)">
-                                @tab.Name
+                                @tab.DisplayName
                             </a>
                         }
                         else
                         {
                             <button class="@ClassBuilder.Build("nav-link", tab == ActiveTab ? "active" : "")" @onclick="() => SelectTab(tab)">
-                                @tab.Name
+                                @tab.DisplayName
                             </button>
                         }
                     </li>
@@ -31,24 +31,26 @@
 
 @code {
     internal List<Navtab> Tabs { get; set; } = new();
-    internal Navtab? ActiveTab { get; set; }
+    public Navtab? ActiveTab { get; set; }
 
     [Parameter] public string Class { get; set; } = string.Empty;
     [Parameter] public string Style { get; set; } = string.Empty;
     [Parameter] public string ContentClass { get; set; } = string.Empty;
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback<string> OnChanged { get; set; }
 
     internal void AddTab(Navtab tab, bool active)
     {
         Tabs.Add(tab);
-        if (ActiveTab == null || active)
+        if (ActiveTab is null || active)
             ActiveTab = tab;
         StateHasChanged();
     }
 
-    private void SelectTab(Navtab tab)
+    internal async Task SelectTab(Navtab tab)
     {
         ActiveTab = tab;
+        await OnChanged.InvokeAsync(tab.Name);
     }
 }

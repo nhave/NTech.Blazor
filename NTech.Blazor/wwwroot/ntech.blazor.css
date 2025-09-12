@@ -7,6 +7,35 @@ body, app {
 :root {
     --bs-btn-active-border-color: transparent;
     --nt-border-radius: 2rem;
+    --sb-track-color: #222;
+    --sb-thumb-color: rgba(var(--bs-emphasis-color-rgb), 0.3);
+    --sb-thumb-color-hover: rgba(var(--bs-emphasis-color-rgb), 0.4);
+    --sb-size: .5rem;
+}
+
+::-webkit-scrollbar {
+    height: var(--sb-size);
+    width: var(--sb-size);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sb-thumb-color-hover);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    :root {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
 }
 
 [data-bs-theme=oled] {
@@ -334,55 +363,35 @@ body {
     --bs-dropdown-padding-y: 0.25rem;
 }
 
-.navtab-container {
-    min-width: fit-content;
+.navtab-wrapper {
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    transform: scaleY(-1);
 }
 
-.nav-tabs-overflow {
-    display: flex;
+.navtab-wrapper .nav-tabs {
     flex-wrap: nowrap;
     min-width: fit-content;
-}
-
-.nav-tabs-overflow .nav-link {
-    text-wrap: nowrap;
-}
-
-.scroll-x-top {
     transform: scaleY(-1);
 }
 
-.scroll-x-top > * {
-    transform: scaleY(-1);
-}
-
-.scroll-x-top {
-    --sb-track-color: #00000000;
-    --sb-thumb-color: rgba(var(--bs-emphasis-color-rgb), 0.65);
-    --sb-thumb-color-hover: rgba(var(--bs-emphasis-color-rgb), 1);
-    --sb-size: 5px;
-}
-
-.scroll-x-top::-webkit-scrollbar {
-    height: var(--sb-size);
-}
-
-.scroll-x-top::-webkit-scrollbar-track {
-    background: var(--sb-track-color);
-    border-radius: 10px;
-}
-
-.scroll-x-top::-webkit-scrollbar-thumb {
-    background: var(--sb-thumb-color);
-    border-radius: 10px;
-}
-
-.scroll-x-top::-webkit-scrollbar-thumb:hover {
-    background: var(--sb-thumb-color-hover);
-}
-
-@supports not selector(::-webkit-scrollbar) {
-    .scroll-x-top {
-        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+@supports (animation-timeline: scroll(self)) {
+    .navtab-wrapper {
+        animation: navtab-overflow both;
+        animation-timeline: scroll(self inline);
     }
+
+    @keyframes navtab-overflow {
+        from, to {
+            padding-bottom: .52rem;
+        }
+    }
+}
+
+.navtab-wrapper .nav-tabs .nav-link {
+    text-wrap-mode: nowrap;
+    user-select: none; /* Slår tekstmarkering fra */
+    -webkit-user-select: none; /* Safari/Chrome */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Ældre IE/Edge */
 }
