@@ -365,7 +365,7 @@ body {
 
 .navtab-wrapper {
     overflow-x: auto;
-    padding-bottom: 1rem;
+    padding-bottom: .5rem;
     transform: scaleY(-1);
 }
 
@@ -383,12 +383,13 @@ body {
 
     @keyframes navtab-overflow {
         from, to {
-            padding-bottom: .52rem;
+            padding-bottom: .25rem;
         }
     }
 }
 
 .navtab-wrapper .nav-tabs .nav-link {
+    display: flex;
     text-wrap-mode: nowrap;
     user-select: none; /* Slår tekstmarkering fra */
     -webkit-user-select: none; /* Safari/Chrome */

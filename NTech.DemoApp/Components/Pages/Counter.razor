@@ -1,24 +1,12 @@
-﻿@page "/counter"
+﻿<PageTitle>Counter</PageTitle>
 
-<PageTitle>Counter</PageTitle>
+<CardBody>
+    <p role="status">Current count: @currentCount</p>
 
-<Card Class="shadow">
-    <CardHeader>
-        <h1>Counter</h1>
-    </CardHeader>
-    <CardBody>
-        <p role="status">Current count: @currentCount</p>
-
-        <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-    </CardBody>
-</Card>
+    <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+</CardBody>
 
 @code {
-    private class TestItem
-    {
-        public string test = "";
-    }
-
     private int currentCount = 0;
 
     private void IncrementCount()

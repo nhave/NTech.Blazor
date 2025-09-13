@@ -10,13 +10,25 @@
                         @if (!string.IsNullOrEmpty(tab.To))
                         {
                             <a class="@ClassBuilder.Build("nav-link", tab == ActiveTab ? "active" : "")" href="@tab.To" @onclick="() => SelectTab(tab)">
-                                @tab.DisplayName
+                                @if (!string.IsNullOrWhiteSpace(tab.Icon))
+                                {
+                                    <i class="@ClassBuilder.Build("bi", tab.Icon)"></i>
+                                }
+                                <div class="@ClassBuilder.Build(_breakpoint, string.IsNullOrWhiteSpace(tab.Icon) ? "" : "ms-2")">
+                                    @tab.DisplayName
+                                </div>
                             </a>
                         }
                         else
                         {
                             <button class="@ClassBuilder.Build("nav-link", tab == ActiveTab ? "active" : "")" @onclick="() => SelectTab(tab)">
-                                @tab.DisplayName
+                                @if (!string.IsNullOrWhiteSpace(tab.Icon))
+                                {
+                                    <i class="@ClassBuilder.Build("bi", tab.Icon)"></i>
+                                }
+                                <div class="@ClassBuilder.Build(_breakpoint, string.IsNullOrWhiteSpace(tab.Icon) ? "" : "ms-2")">
+                                    @tab.DisplayName
+                                </div>
                             </button>
                         }
                     </li>
@@ -39,6 +51,18 @@
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public EventCallback<string> OnChanged { get; set; }
+
+    [Parameter] public Breakpoints Breakpoint { get; set; } = Breakpoints.None;
+
+    private string _breakpoint => Breakpoint switch
+    {
+        Breakpoints.SM => "d-none d-sm-block",
+        Breakpoints.MD => "d-none d-sm-block",
+        Breakpoints.LG => "d-none d-lg-block",
+        Breakpoints.XL => "d-none d-xl-block",
+        Breakpoints.XXL => "d-none d-xxl-block",
+        _ => ""
+    };
 
     internal void AddTab(Navtab tab, bool active)
     {
