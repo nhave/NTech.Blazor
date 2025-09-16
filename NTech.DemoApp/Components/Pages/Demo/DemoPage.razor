@@ -6,31 +6,18 @@
     <CardHeader Class="border-0 pb-0">
         <h1 class="m-0">Demo Page</h1>
     </CardHeader>
-    <NavtabMenu Class="card-tabs" OnChanged="OnTabChanged">
-        <Navtab Name="Demo" To="demo" Icon="bi-info-square-fill">
-            <CardBody>
-                <p>This page provides demos of many features, in this project.</p>
-            </CardBody>
-            <NavtabMenu Class="card-tabs border-top" ContentClass="card-body" OnChanged="OnTabChanged">
-                <Navtab Name="Demo" To="demo">
-                    <PageTitle>Demo Page</PageTitle>
-                    <p>This page provides demos of many features, in this project.</p>
-                </Navtab>
-                <Navtab Name="Contex Menu" To="demo/contexmenu">
-                    <PageTitle>Context Demo</PageTitle>
-                    <ContextDemo />
-                </Navtab>
-                <Navtab Name="Test Page" To="demo/test">
-                    <PageTitle>Test Page</PageTitle>
-                    <p>Test</p>
-                </Navtab>
-            </NavtabMenu>
+    <NavtabMenu Class="card-tabs" ContentClass="card-body" OnChanged="OnTabChanged">
+        <Navtab Name="Demo" To="demo">
+            <PageTitle>Demo Page</PageTitle>
+            <p>This page provides demos of many features, in this project.</p>
         </Navtab>
-        <Navtab Name="Counter" To="demo/counter" Icon="bi-plus-square-fill">
-            <Counter />
+        <Navtab Name="Contex Menu" To="demo/contexmenu">
+            <PageTitle>Context Demo</PageTitle>
+            <ContextDemo />
         </Navtab>
-        <Navtab Name="Weather" To="demo/weather" Icon="bi-list-nested">
-            <Weather />
+        <Navtab Name="Test Page" To="demo/test">
+            <PageTitle>Test Page</PageTitle>
+            <p>Test</p>
         </Navtab>
     </NavtabMenu>
 </Card>
