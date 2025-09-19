@@ -1,0 +1,28 @@
+﻿@page "/demo/dropdown"
+
+<PageTitle>Dropdown</PageTitle>
+
+<BasePage>
+	<Header>
+		<div class="row justify-content-between">
+            <div class="col-11">
+                <h1 class="m-0">Dropdown</h1>
+            </div>
+            <div class="col-1 d-flex justify-content-end">
+                <Dropdown>
+                    <DropdownToggleButton Class="btn-icon border-0 p-0">
+                        <Icon Size="IconSize.x1" Name="IconName.ThreeDotsVertical" />
+                    </DropdownToggleButton>
+                    <DropdownMenu Position="DropdownMenuPosition.End">
+                        <DropdownItem Type="DropdownItemType.Button">Option 1</DropdownItem>
+                        <DropdownItem Type="DropdownItemType.Button">Option 2</DropdownItem>
+                        <DropdownItem Type="DropdownItemType.Button">Option 2</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
+        </div>
+	</Header>
+	<Body>
+		Dropdown Body
+	</Body>
+</BasePage>

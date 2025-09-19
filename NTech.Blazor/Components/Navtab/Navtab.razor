@@ -33,7 +33,7 @@
     {
         StateHasChanged();
         if (IsActive)
-            Parent?.SelectTab(this).GetAwaiter();
+            Parent?.SelectTab(this).GetAwaiter().GetResult();
     }
 
     private bool ShouldMatch()

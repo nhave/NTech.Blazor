@@ -1,8 +1,19 @@
-﻿<ContextTrigger ContextMenu="_contextMenu" Item="item">
-    <div class="border p-5" style="user-select: none;">
-        Right click here to open the context menu.
-    </div>
-</ContextTrigger>
+﻿@page "/demo/contexmenu"
+
+<PageTitle>Contex Menu</PageTitle>
+
+<BasePage>
+	<Header>
+		<h1 class="m-0">Contex Menu</h1>
+	</Header>
+	<Body>
+        <ContextTrigger ContextMenu="_contextMenu" Item="item">
+            <div class="border p-5" style="user-select: none;">
+                Right click here to open the context menu.
+            </div>
+        </ContextTrigger>
+	</Body>
+</BasePage>
 
 <ContextMenu @ref="@_contextMenu">
     <ContextItem OnClick="OnContextClicked">
@@ -31,13 +42,5 @@
     {
         var myItem = item as Item;
         Console.WriteLine($"Context triggered for: {myItem?.Name ?? "NULL"}");
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            StateHasChanged();
-        }
     }
 }
