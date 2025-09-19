@@ -1,4 +1,5 @@
 .nt-scrollbg {
+    --nt-bg-speed: 500s;
     height: 100vh;
     width: 200vw;
     position: fixed;
@@ -110,11 +111,11 @@
 }
 
 .nt-scrollbg-scroll-list {
-    animation: nt-scroll-left 500s linear infinite;
+    animation: nt-scroll-left var(--nt-bg-speed) linear infinite;
 }
 
 .nt-scrollbg-scroll-list-right {
-    animation: nt-scroll-right 500s linear infinite;
+    animation: nt-scroll-right var(--nt-bg-speed) linear infinite;
 }
 
 @keyframes nt-scroll-left {

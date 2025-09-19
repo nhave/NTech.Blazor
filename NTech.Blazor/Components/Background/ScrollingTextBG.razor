@@ -1,6 +1,6 @@
 ﻿@namespace NTech.Blazor
 
-<div class="nt-scrollbg">
+<div class="nt-scrollbg" style="@TextSpeed">
 	<div class="nt-scrollbg-rotated-container">
 		@for (int ul = 0; ul < 6; ul++)
 		{
@@ -50,6 +50,15 @@
 	public string Text { get; set; } = "EXAMPLE TEXT";
 	[Parameter]
 	public string Color { get; set; } = "#05777a";
+
+	private string TextSpeed
+	{
+		get
+		{
+			var speed = Text.Length * 30;
+			return $"--nt-bg-speed: {speed}s;";
+		}
+	}
 
 	private string DarkenHexColor(string hex, double factor)
 	{
