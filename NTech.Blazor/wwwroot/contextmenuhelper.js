@@ -10,10 +10,10 @@
     let newY = y;
 
     if (x + rect.width > winWidth) {
-        newX = winWidth - rect.width - 20;
+        newX = winWidth - rect.width - 10;
     }
     if (y + rect.height > winHeight) {
-        newY = winHeight - rect.height - 20;
+        newY = winHeight - rect.height - 10;
     }
 
     return { x: newX, y: newY };

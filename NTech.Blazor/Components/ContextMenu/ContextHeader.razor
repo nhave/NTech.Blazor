@@ -1,0 +1,17 @@
+@namespace NTech.Blazor
+
+<li>
+	<h6 id="@Id" class="@ClassNames" style="@Style" @attributes="@AdditionalAttributes">
+        @ChildContent
+    </h6>
+</li>
+
+@code {
+	[Parameter] public RenderFragment? ChildContent { get; set; }
+	[Parameter] public string? Class { get; set; }
+	[Parameter] public string? Id { get; set; }
+	[Parameter] public string? Style { get; set; }
+	[Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> AdditionalAttributes { get; set; } = new();
+
+	private string ClassNames => ClassBuilder.Build("dropdown-header", Class!);
+}

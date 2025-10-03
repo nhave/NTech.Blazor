@@ -96,5 +96,12 @@ window.navbar = {
     }
 }
 
+window.focusElement = (elementId) => {
+    const el = document.getElementById(elementId);
+    if (el) {
+        el.focus();
+    }
+};
+
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', window.theme.updateTheme);
 window.theme.updateTheme();

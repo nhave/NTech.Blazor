@@ -12,6 +12,9 @@ namespace NTech.DemoApp
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
+            // Register NTech Blazor services
+            builder.Services.AddNTechBlazor();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
