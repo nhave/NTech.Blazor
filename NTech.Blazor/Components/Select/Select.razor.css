@@ -1,0 +1,11 @@
+.select-content {
+    list-style: none;
+    max-height: 248px;
+    overflow-y: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.select-content li + li {
+    margin-top: .25rem;
+}

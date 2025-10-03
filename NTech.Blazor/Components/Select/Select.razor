@@ -1,0 +1,134 @@
+@namespace NTech.Blazor
+@typeparam TItem
+
+<div class="dropdown" id="@Id">
+    <button class="@_class" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        @(_selectedItem is not null ? GetItemName(_selectedItem) : Placeholder)
+	</button>
+	<div class="dropdown-menu">
+        @{
+            var noItems = true;
+
+		    @if (Searchable)
+		    {
+                <div><input @bind-value="_searchText" @oninput="args => _searchText = args.Value?.ToString()!" type="text" class="form-control bg-body-tertiary" placeholder="Search..." /></div>
+                <div><hr class="dropdown-divider" /></div>
+		    }
+            <ul class="select-content">
+                @foreach (var item in Items)
+                {
+                    var name = GetItemName(item);
+
+                    if (!Searchable || string.IsNullOrWhiteSpace(name) || name.Contains(_searchText.Trim(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        noItems = false;
+                        <li>
+                            <button class="@GetItemClass(item)" @onclick="_ => OnItemSelectedAsync(item)">
+                                @name
+                                <i class="bi bi-check ms-auto dropdown-check"></i>
+                            </button>
+                        </li>
+                    }
+                }
+                @if (noItems)
+                {
+                    <li>
+                        <span class="dropdown-item-text">No items found.</span>
+                    </li>
+                }
+            </ul>
+        }
+	</div>
+</div>
+
+@code {
+    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
+
+    [Parameter] public string Id { get; set; } = $"select_{Guid.NewGuid()}";
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool Searchable { get; set; }
+    [Parameter] public string NameProperty { get; set; }
+    [Parameter] public IEnumerable<TItem> Items { get; set; }
+    [Parameter] public string? Placeholder { get; set; } = "Select an item";
+
+    private IJSObjectReference? _module;
+    private DotNetObjectReference<Select<TItem>> objRef = default!;
+
+    private string _searchText = string.Empty;
+    private string _class => ClassBuilder.Build("btn", "btn-secondary", "dropdown-toggle", Disabled ? "disabled" : null, Class);
+    private TItem? _selectedItem;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        _module = await JSRuntime.InvokeAsync<IJSObjectReference>(
+            "import", "./_content/NTech.Blazor/selecthelper.js");
+
+        await _module.InvokeVoidAsync("Initialize", Id, objRef);
+    }
+
+    protected override void OnInitialized()
+    {
+        objRef ??= DotNetObjectReference.Create(this);
+    }
+
+    private string GetItemName(TItem item)
+    {
+        if (item == null) return string.Empty;
+        if (string.IsNullOrEmpty(NameProperty))
+        {
+            return item.ToString();
+        }
+        var propertyInfo = typeof(TItem).GetProperty(NameProperty);
+        if (propertyInfo != null)
+        {
+            var value = propertyInfo.GetValue(item);
+            return value?.ToString() ?? string.Empty;
+        }
+        return item.ToString();
+    }
+
+    [Parameter] public EventCallback OnHidden { get; set; }
+    [Parameter] public EventCallback OnHiding { get; set; }
+    [Parameter] public EventCallback OnShowing { get; set; }
+    [Parameter] public EventCallback OnShown { get; set; }
+    [Parameter] public EventCallback<TItem> OnItemSelected { get; set; }
+
+    [JSInvokable] public async Task bsHiddenDropdown()
+    {
+        _searchText = string.Empty;
+        await InvokeAsync(StateHasChanged);
+        await OnHidden.InvokeAsync();
+    }
+    [JSInvokable] public async Task bsHideDropdown() => await OnHiding.InvokeAsync();
+    [JSInvokable] public async Task bsShowDropdown() => await OnShowing.InvokeAsync();
+    [JSInvokable] public async Task bsShownDropdown() => await OnShown.InvokeAsync();
+
+    public async Task HideAsync() => await _module!.InvokeVoidAsync("Hide", Id);
+    public async Task ShowAsync() => await _module!.InvokeVoidAsync("Show", Id);
+    public async Task ToggleAsync() => await _module!.InvokeVoidAsync("Toggle", Id);
+    public async Task UpdateAsync() => await _module!.InvokeVoidAsync("Update", Id);
+
+    public async Task ResetAsync()
+    {
+        if (_selectedItem != null)
+        {
+            _selectedItem = default;
+            await InvokeAsync(StateHasChanged);
+            await OnItemSelected.InvokeAsync(default);
+		}
+    }
+
+    private async Task OnItemSelectedAsync(TItem item)
+    {
+        _selectedItem = item;
+        await OnItemSelected.InvokeAsync(item);
+    }
+
+    private string GetItemClass(TItem item)
+    {
+        return ClassBuilder.Build("dropdown-item", " d-flex", item.Equals(_selectedItem) ? "active" : null);
+    }
+}

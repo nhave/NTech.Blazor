@@ -1,0 +1,62 @@
+﻿@page "/demo/select"
+
+<PageTitle>Select</PageTitle>
+
+<BasePage>
+	<Header>
+		<h1 class="m-0">Select</h1>
+	</Header>
+	<Body>
+		<div class="d-flex gap-2 mb-3">
+			<Select @ref="selectRef" TItem="TestItem" Items="items" NameProperty="Name" Searchable="true" OnItemSelected="OnItemSelectedAsync" />
+			<Button Color="ButtonColor.Secondary" @onclick="_ => selectRef.ShowAsync()">Show</Button>
+			<Button @onclick="_ => selectRef.HideAsync()" Color="ButtonColor.Secondary">Hide</Button>
+			<Button @onclick="_ => selectRef.ToggleAsync()" Color="ButtonColor.Secondary">Toggle</Button>
+			<Button @onclick="_ => selectRef.ResetAsync()" Color="ButtonColor.Secondary">Reset</Button>
+		</div>
+		<div class="border p-5">
+			@if(_selectedItem != null)
+			{
+				<div>Selected Item: @_selectedItem.Name (ID: @_selectedItem.Id)</div>
+			}
+			else
+			{
+				<div>No item selected.</div>
+			}
+		</div>
+
+	</Body>
+</BasePage>
+
+@code {
+	private class TestItem
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+	}
+
+	private List<TestItem> items = new List<TestItem>
+	{
+		new TestItem { Id = 1, Name = "Item 1" },
+		new TestItem { Id = 2, Name = "Item 2" },
+		new TestItem { Id = 3, Name = "Item 3" },
+		new TestItem { Id = 4, Name = "Item 4" },
+		new TestItem { Id = 5, Name = "Item 5" },
+		new TestItem { Id = 6, Name = "Item 6" },
+		new TestItem { Id = 7, Name = "Item 7" },
+		new TestItem { Id = 8, Name = "Item 8" },
+		new TestItem { Id = 9, Name = "Item 9" },
+		new TestItem { Id = 10, Name = "Item 10" },
+		new TestItem { Id = 11, Name = "Item 11" },
+		new TestItem { Id = 12, Name = "Item 12" },
+	};
+
+	private Select<TestItem> selectRef = default!;
+	private TestItem? _selectedItem;
+
+	private async Task OnItemSelectedAsync(TestItem item)
+	{
+		_selectedItem = item;
+		await InvokeAsync(StateHasChanged);
+	}
+}
