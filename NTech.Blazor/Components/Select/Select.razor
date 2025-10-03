@@ -50,7 +50,7 @@
     [Parameter] public bool Searchable { get; set; }
     [Parameter] public string NameProperty { get; set; }
     [Parameter] public IEnumerable<TItem> Items { get; set; }
-    [Parameter] public string? Placeholder { get; set; } = "Select an item 2erdhfjgbhf fdff3ewf  dsef";
+    [Parameter] public string? Placeholder { get; set; } = "Select an item";
 
     private IJSObjectReference? _module;
     private DotNetObjectReference<Select<TItem>> objRef = default!;
