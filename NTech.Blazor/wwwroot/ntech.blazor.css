@@ -130,7 +130,7 @@ body {
     --bs-dropdown-min-width: 12rem;
     --bs-dropdown-padding-x: .25rem;
     --bs-dropdown-padding-y: .25rem;
-    --bs-dropdown-link-hover-bg: var(--nt-dropdown-link-color);
+    /*--bs-dropdown-link-hover-bg: var(--nt-dropdown-link-color);*/
     --bs-dropdown-link-active-bg: var(--nt-dropdown-link-color);
     --bs-dropdown-font-size: .875rem;
     font-size: .875rem;
