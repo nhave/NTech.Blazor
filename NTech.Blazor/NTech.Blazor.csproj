@@ -26,7 +26,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 		<PackageId>NTech.Blazor</PackageId>
-		<Version>1.0.5</Version>
+		<Version>1.0.6</Version>
 		<Authors>NHAVE</Authors>
 		<Company>N-Tech</Company>
 		<Description>Personal extension for Blazor.Bootstrap</Description>
