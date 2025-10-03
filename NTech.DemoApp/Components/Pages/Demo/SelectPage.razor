@@ -7,13 +7,24 @@
 		<h1 class="m-0">Select</h1>
 	</Header>
 	<Body>
-		<div class="d-flex gap-2 mb-3">
-			<Select @ref="selectRef" TItem="TestItem" Items="items" NameProperty="Name" Searchable="true" OnItemSelected="OnItemSelectedAsync" />
-			<Button Color="ButtonColor.Secondary" @onclick="_ => selectRef.ShowAsync()">Show</Button>
-			<Button @onclick="_ => selectRef.HideAsync()" Color="ButtonColor.Secondary">Hide</Button>
-			<Button @onclick="_ => selectRef.ToggleAsync()" Color="ButtonColor.Secondary">Toggle</Button>
-			<Button @onclick="_ => selectRef.ResetAsync()" Color="ButtonColor.Secondary">Reset</Button>
+		<div class="row g-2 mb-3">
+			<div class="col-12 col-sm-6 col-md-5 col-lg-4 ">
+				<Select @ref="selectRef" TItem="TestItem" Items="items" NameProperty="Name" Searchable="true" OnItemSelected="OnItemSelectedAsync" />
+			</div>
+			<div class="col-auto">
+				<Button @onclick="_ => selectRef.ShowAsync()" Color="ButtonColor.Secondary">Show</Button>
+			</div>
+			<div class="col-auto">
+				<Button @onclick="_ => selectRef.HideAsync()" Color="ButtonColor.Secondary">Hide</Button>
+			</div>
+			<div class="col-auto">
+				<Button @onclick="_ => selectRef.ToggleAsync()" Color="ButtonColor.Secondary">Toggle</Button>
+			</div>
+			<div class="col-auto">
+				<Button @onclick="_ => selectRef.ResetAsync()" Color="ButtonColor.Secondary">Reset</Button>
+			</div>
 		</div>
+
 		<div class="border p-5">
 			@if(_selectedItem != null)
 			{

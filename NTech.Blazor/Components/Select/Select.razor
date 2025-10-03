@@ -1,11 +1,11 @@
 @namespace NTech.Blazor
 @typeparam TItem
 
-<div class="dropdown" id="@Id">
+<div class="dropdown select-wrapper no-select" id="@Id">
     <button class="@_class" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         @(_selectedItem is not null ? GetItemName(_selectedItem) : Placeholder)
 	</button>
-	<div class="dropdown-menu">
+	<div class="dropdown-menu select-menu">
         @{
             var noItems = true;
 
@@ -50,13 +50,13 @@
     [Parameter] public bool Searchable { get; set; }
     [Parameter] public string NameProperty { get; set; }
     [Parameter] public IEnumerable<TItem> Items { get; set; }
-    [Parameter] public string? Placeholder { get; set; } = "Select an item";
+    [Parameter] public string? Placeholder { get; set; } = "Select an item 2erdhfjgbhf fdff3ewf  dsef";
 
     private IJSObjectReference? _module;
     private DotNetObjectReference<Select<TItem>> objRef = default!;
 
     private string _searchText = string.Empty;
-    private string _class => ClassBuilder.Build("btn", "btn-secondary", "dropdown-toggle", Disabled ? "disabled" : null, Class);
+    private string _class => ClassBuilder.Build("form-select", Disabled ? "disabled" : null, Class);
     private TItem? _selectedItem;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

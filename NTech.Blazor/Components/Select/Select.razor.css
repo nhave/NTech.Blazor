@@ -1,3 +1,14 @@
+.select-wrapper .form-select {
+    text-align: start;
+    white-space: normal; /* tillad linjeskift */
+    word-wrap: break-word; /* bryd lange ord hvis nødvendigt */
+    overflow: visible;
+}
+
+.select-menu {
+    min-width: 100%;
+}
+
 .select-content {
     list-style: none;
     max-height: 248px;
